@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Início{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="content">
+    <div class="container">
+        <form method="POST" action="/produto/edit">
+            {% csrf_token %}
+            <input type="hidden" value="{{ produto.id }}" name="id">
+
+            <div class="form-group row mb-3">
+                <label for="Produto" class="col-md-2 col-form-label">Produto</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="Produto" value="{{ produto.Produto }}" name="Produto">
+                </div>
+            </div>
+
+            <div class="form-group row mb-2">
+                <div class="col-md-6 offset-md-2">
+                    <div class="form-check">
+                        {% if produto.destaque %}
+                            <input type="checkbox" class="form-check-input" id="destaque" checked name="destaque">
+                        {% else %}
+                            <input type="checkbox" class="form-check-input" id="destaque" name="destaque">
+                        {% endif %}
+                        <label class="form-check-label" for="destaque">Destaque</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <div class="col-md-6 offset-md-2">
+                    <div class="form-check">
+                        {% if produto.promocao %}
+                            <input type="checkbox" class="form-check-input" id="promocao" checked name="promocao">
+                        {% else %}
+                            <input type="checkbox" class="form-check-input" id="promocao" name="promocao">
+                        {% endif %}
+                        <label class="form-check-label" for="promocao">Promoção</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row mb-4">
+                <label for="msgPromocao" class="col-md-2 col-form-label">Msg Promoção</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="msgPromocao" value="{{ produto.msgPromocao }}" name="msgPromocao">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 offset-md-2 d-flex gap-2">
+                    <button type="submit" class="btn btn-danger align-middle">
+                        <i class="fa fa-check"></i> Salvar
+                    </button>
+                    <a href="{% url 'produto' %}" class="btn btn-secondary text-white">
+                        <i class="fa fa-rotate-left"></i> Retornar
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/home.js' %}"></script>
+{% endblock %}
