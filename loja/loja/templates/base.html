@@ -12,9 +12,9 @@
     {% block styles %}{% endblock %}
     <title>Loja - {% block title %}{% endblock %}</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <header>
-        <nav class="navbar justify-content-end navbar-expand-lg">
+        <nav class="navbar justify-content-end navbar-expand-lg navbar-light bg-light border-bottom">
             <ul class="nav">
                 <li class="nav-item">
                     <a class="nav-link" href="/"><i class="fa fa-home"></i> Home</a>
@@ -38,22 +38,11 @@
         </nav>
     </header>
 
-    <main class="container my-4">
-        {% block content %}
-        <div class="row">
-            <div class="col-md-12 mt-3">
-                <button type="submit" class="btn btn-danger mr-2">
-                    <i class="fa fa-check"></i> Salvar
-                </button>
-                <a href="{% url 'produto' %}" class="btn bg-secondary text-white">
-                    <i class="fa fa-rotate-left"></i> Retornar
-                </a>
-            </div>
-        </div>
-        {% endblock %}
+    <main class="container my-4 flex-grow-1">
+        {% block content %}{% endblock %}
     </main>
 
-    <footer class="page-footer font-small blue mt-auto">
+    <footer class="page-footer font-small blue mt-auto border-top bg-light">
         <div class="footer-copyright text-center py-3">
             ©2020 Copyright: <a href="https://www.casadocodigo.com.br/">Casadocodigo.com.br</a>
         </div>
