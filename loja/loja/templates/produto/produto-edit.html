@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Início{% endblock %}
+{% block title %}Editar Produto{% endblock %}
 
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
@@ -15,7 +15,7 @@
             <input type="hidden" value="{{ produto.id }}" name="id">
 
             <div class="form-group row mb-3">
-                <label for="Produto" class="col-md-2 col-form-label">Produto</label>
+                <label for="Produto" class="col-md-2 col-form-label font-weight-bold">Produto</label>
                 <div class="col-md-6">
                     <input type="text" class="form-control" id="Produto" value="{{ produto.Produto }}" name="Produto">
                 </div>
@@ -47,16 +47,48 @@
                 </div>
             </div>
 
-            <div class="form-group row mb-4">
-                <label for="msgPromocao" class="col-md-2 col-form-label">Msg Promoção</label>
+            <div class="form-group row mb-3">
+                <label for="msgPromocao" class="col-md-2 col-form-label font-weight-bold">Msg Promoção</label>
                 <div class="col-md-6">
                     <input type="text" class="form-control" id="msgPromocao" value="{{ produto.msgPromocao }}" name="msgPromocao">
                 </div>
             </div>
 
+            <div class="form-group row mb-3">
+                <label for="CategoriaFk" class="col-md-2 col-form-label font-weight-bold">Categorias</label>
+                <div class="col-md-6">
+                    <select class="form-control" name="CategoriaFk" id="CategoriaFk">
+                        <option value="-1">-----</option>
+                        {% for cate in categorias %}
+                            {% if produto.categoria_id == cate.id %}
+                                <option value="{{ cate.id }}" selected>{{ cate.Categoria }}</option>
+                            {% else %}
+                                <option value="{{ cate.id }}">{{ cate.Categoria }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row mb-4">
+                <label for="FabricanteFk" class="col-md-2 col-form-label font-weight-bold">Fabricantes</label>
+                <div class="col-md-6">
+                    <select class="form-control" name="FabricanteFk" id="FabricanteFk">
+                        <option value="-1">-----</option>
+                        {% for fabri in fabricantes %}
+                            {% if produto.fabricante_id == fabri.id %}
+                                <option value="{{ fabri.id }}" selected>{{ fabri.Fabricante }}</option>
+                            {% else %}
+                                <option value="{{ fabri.id }}">{{ fabri.Fabricante }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-6 offset-md-2 d-flex gap-2">
-                    <button type="submit" class="btn btn-danger align-middle">
+                    <button type="submit" class="btn btn-danger">
                         <i class="fa fa-check"></i> Salvar
                     </button>
                     <a href="{% url 'produto' %}" class="btn btn-secondary text-white">
