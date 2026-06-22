@@ -59,6 +59,30 @@
                 </div>
             </div>
 
+            <div class="form-group row mb-3">
+                <label for="CategoriaFk" class="col-md-2 col-form-label font-weight-bold">Categoria</label>
+                <div class="col-md-6">
+                    <select class="form-control" name="CategoriaFk" id="CategoriaFk" required>
+                        <option value="">Escolha uma Categoria...</option>
+                        {% for cate in categorias %}
+                            <option value="{{ cate.id }}">{{ cate.Categoria }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label for="FabricanteFk" class="col-md-2 col-form-label font-weight-bold">Fabricante</label>
+                <div class="col-md-6">
+                    <select class="form-control" name="FabricanteFk" id="FabricanteFk" required>
+                        <option value="">Escolha um Fabricante...</option>
+                        {% for fabri in fabricantes %}
+                            <option value="{{ fabri.id }}">{{ fabri.Fabricante }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
             <div class="form-group row mb-4">
                 <label for="image" class="col-md-2 col-form-label font-weight-bold">Imagem</label>
                 <div class="col-md-6">

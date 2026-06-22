@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Início{% endblock %}
+{% block title %}Detalhes do Produto{% endblock %}
 
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
@@ -9,24 +9,26 @@
 
 {% block content %}
 <div id="content">
-    <div class="container">
-        
+    <div class="container mt-3">
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h2>Detalhes do Produto</h2>
+                <hr>
+            </div>
+        </div>
+
         <div class="form-group row mb-3">
-            <label for="Produto" class="col-md-2 col-form-label font-weight-bold">Produto</label>
+            <label class="col-md-2 col-form-label font-weight-bold">Produto</label>
             <div class="col-md-6">
-                <input type="text" class="form-control" id="Produto" value="{{ produto.Produto }}" name="Produto" disabled>
+                <input type="text" class="form-control" value="{{ produto.Produto }}" disabled>
             </div>
         </div>
 
         <div class="form-group row mb-2">
             <div class="col-md-6 offset-md-2">
                 <div class="form-check">
-                    {% if produto.destaque %}
-                        <input type="checkbox" class="form-check-input" id="destaque" checked name="destaque" disabled>
-                    {% else %}
-                        <input type="checkbox" class="form-check-input" id="destaque" name="destaque" disabled>
-                    {% endif %}
-                    <label class="form-check-label" for="destaque">Destaque</label>
+                    <input type="checkbox" class="form-check-input" {% if produto.destaque %}checked{% endif %} disabled>
+                    <label class="form-check-label">Destaque</label>
                 </div>
             </div>
         </div>
@@ -34,42 +36,59 @@
         <div class="form-group row mb-3">
             <div class="col-md-6 offset-md-2">
                 <div class="form-check">
-                    {% if produto.promocao %}
-                        <input type="checkbox" class="form-check-input" id="promocao" checked name="promocao" disabled>
-                    {% else %}
-                        <input type="checkbox" class="form-check-input" id="promocao" name="promocao" disabled>
-                    {% endif %}
-                    <label class="form-check-label" for="promocao">Promoção</label>
+                    <input type="checkbox" class="form-check-input" {% if produto.promocao %}checked{% endif %} disabled>
+                    <label class="form-check-label">Promoção</label>
                 </div>
             </div>
         </div>
 
         <div class="form-group row mb-3">
-            <label for="msgPromocao" class="col-md-2 col-form-label font-weight-bold">Msg Promoção</label>
+            <label class="col-md-2 col-form-label font-weight-bold">Msg Promoção</label>
             <div class="col-md-6">
-                <input type="text" class="form-control" id="msgPromocao" value="{{ produto.msgPromocao }}" name="msgPromocao" disabled>
+                <input type="text" class="form-control" value="{{ produto.msgPromocao|default:"" }}" disabled>
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
+            <label class="col-md-2 col-form-label font-weight-bold">Categorias</label>
+            <div class="col-md-6">
+                <select class="form-control" disabled>
+                    <option>{{ produto.categoria.Categoria|default:"-----" }}</option>
+                </select>
             </div>
         </div>
 
         <div class="form-group row mb-4">
-            <label class="col-md-2 col-form-label font-weight-bold">Imagem</label>
+            <label class="col-md-2 col-form-label font-weight-bold">Fabricantes</label>
+            <div class="col-md-6">
+                <select class="form-control" disabled>
+                    <option>{{ produto.fabricante.Fabricante|default:"-----" }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row mb-4">
+            <label class="col-md-2 col-form-label font-weight-bold">Imagem Atual</label>
             <div class="col-md-6">
                 {% if produto.image %}
-                    <img class="img-thumbnail" width="200px" src="/media/{{ produto.image }}" alt="{{ produto.Produto }}">
+                    <div class="border d-inline-block p-3 bg-white rounded shadow-sm">
+                        <img src="{{ produto.image.url }}" alt="{{ produto.Produto }}" class="img-fluid" style="max-height: 150px;">
+                    </div>
                 {% else %}
-                    <span class="text-muted">Nenhuma imagem cadastrada</span>
+                    <div class="border d-inline-block p-3 bg-white rounded shadow-sm">
+                        <img src="{% static 'images/sem-foto.png' %}" alt="Sem foto" class="img-fluid" style="max-height: 150px;">
+                    </div>
                 {% endif %}
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-6 offset-md-2">
+            <div class="col-md-6 offset-md-2 d-flex gap-2">
                 <a href="{% url 'produto' %}" class="btn btn-secondary text-white">
                     <i class="fa fa-rotate-left"></i> Retornar
                 </a>
             </div>
         </div>
-
     </div>
 </div>
 {% endblock %}

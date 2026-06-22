@@ -125,13 +125,16 @@ def delete_produto_postback(request, id=None):
     if request.method == 'POST':
         id = request.POST.get("id")
         produto = request.POST.get("Produto")
-        
         print("postback-delete")
         print(id)
-        
+
         try:
-            Produto.objects.filter(id=id).delete()
-            print("Produto %s excluido com sucesso" % produto)
+            obj_produto = Produto.objects.filter(id=id).first()
+            if obj_produto:
+                if obj_produto.image:
+                    obj_produto.image.delete(save=False)
+                obj_produto.delete()
+                print("Produto %s e sua imagem foram excluídos com sucesso" % produto)
         except Exception as e:
             print("Erro salvando edição de produto: %s" % e)
     return redirect("/produto")
@@ -143,13 +146,8 @@ def create_produto_view(request, id=None):
         promocao = request.POST.get("promocao")
         msgPromocao = request.POST.get("msgPromocao")
         preco = request.POST.get("preco")
-        
-        print("postback-create")
-        print(produto)
-        print(destaque)
-        print(promocao)
-        print(msgPromocao)
-        print(preco)
+        categoria_id = request.POST.get("CategoriaFk")
+        fabricante_id = request.POST.get("FabricanteFk")
         
         try:
             obj_produto = Produto()
@@ -162,23 +160,29 @@ def create_produto_view(request, id=None):
             obj_produto.preco = 0
             if (preco is not None) and (preco != ""):
                 obj_produto.preco = preco
+            obj_produto.categoria = Categoria.objects.filter(id=categoria_id).first()
+            obj_produto.fabricante = Fabricante.objects.filter(id=fabricante_id).first()
+            
             obj_produto.criado_em = timezone.now()
             obj_produto.alterado_em = obj_produto.criado_em
+            
             if request.FILES:
                 num_files = len(request.FILES.getlist('image'))
                 if num_files > 0:
                     imagefile = request.FILES['image']
-                    print(imagefile)
-                    
                     fs = FileSystemStorage()
                     filename = fs.save(imagefile.name, imagefile)
-                    
                     if (filename is not None) and (filename != ""):
-                        obj_produto.image = filename
+                        obj_produto.image = filename    
             obj_produto.save()
-            print("Produto %s salvo com sucesso" % produto)
             return redirect("/produto")
         except Exception as e:
             print("Erro inserindo produto: %s" % e)
             return redirect("/produto")
-    return render(request, template_name='produto/produto-create.html', status=200)
+    Fabricantes = Fabricante.objects.all()
+    Categorias = Categoria.objects.all()
+    context = {
+        'fabricantes': Fabricantes,
+        'categorias': Categorias
+    }
+    return render(request, template_name='produto/produto-create.html', context=context, status=200)

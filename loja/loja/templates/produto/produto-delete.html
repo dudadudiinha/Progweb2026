@@ -54,7 +54,36 @@
             <div class="form-group row mb-4">
                 <label for="msgPromocao" class="col-md-2 col-form-label font-weight-bold">Msg Promoção</label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="msgPromocao" value="{{ produto.msgPromocao }}" name="msgPromocao" disabled>
+                    <input type="text" class="form-control" id="msgPromocao" value="{{ produto.msgPromocao|default:"" }}" name="msgPromocao" disabled>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label for="CategoriaFk" class="col-md-2 col-form-label font-weight-bold">Categorias</label>
+                <div class="col-md-6">
+                    <select class="form-control" name="CategoriaFk" id="CategoriaFk" disabled>
+                        <option value="{{ produto.categoria.id }}">{{ produto.categoria.Categoria|default:"Não informada" }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row mb-4">
+                <label for="FabricanteFk" class="col-md-2 col-form-label font-weight-bold">Fabricantes</label>
+                <div class="col-md-6">
+                    <select class="form-control" name="FabricanteFk" id="FabricanteFk" disabled>
+                        <option value="{{ produto.fabricante.id }}">{{ produto.fabricante.Fabricante|default:"Não informado" }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row mb-4">
+                <label class="col-md-2 col-form-label font-weight-bold">Imagem</label>
+                <div class="col-md-6">
+                    {% if produto.image %}
+                        <img class="img-thumbnail" width="200px" src="{{ produto.image.url }}" alt="{{ produto.Produto }}">
+                    {% else %}
+                        <img class="img-thumbnail" width="200px" src="{% static 'images/sem-foto.png' %}" alt="Sem foto">
+                    {% endif %}
                 </div>
             </div>
 
