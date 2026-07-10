@@ -18,13 +18,12 @@
             <h5 class="col-md-2">Usuário</h5>
             <h5 class="col-md-4">e-mail</h5>
             <h5 class="col-md-3">Aniversário</h5>
-        </div>
+            <h5 class="col-md-3">Ações</h5> </div>
 
         <hr>
 
         {% for usuario in usuarios %}
-            <div class="row mb-2">
-                <div class="col-md-2">
+            <div class="row mb-2 align-items-center"> <div class="col-md-2">
                     <span>{{ usuario.user.username }}</span>
                 </div>
                 <div class="col-md-4">
@@ -32,6 +31,12 @@
                 </div>
                 <div class="col-md-3">
                     <span>{{ usuario.aniversario|default:"Não informado" }}</span>
+                </div>
+                
+                <div class="col-md-3">
+                    <a href="{% url 'edit_usuario' usuario.id %}" class="btn btn-warning btn-sm">
+                        Editar
+                    </a>
                 </div>
             </div>
         {% empty %}

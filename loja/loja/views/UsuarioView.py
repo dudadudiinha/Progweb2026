@@ -10,41 +10,32 @@ def list_usuario_view(request, id=None):
     }
     return render(request, template_name='usuario/usuario.html', context=context, status=200)
 
+
 @login_required(login_url='/admin/')
-def edit_usuario_view(request):
-    usuario = get_object_or_404(Usuario, user=request.user)
-    emailUnused = True
+def edit_usuario_view(request, id):
+    usuario = get_object_or_404(Usuario, pk=id)
+    user_instance = usuario.user
+    
     message = None
 
     if request.method == 'POST':
         usuarioForm = UserUsuarioForm(request.POST, instance=usuario)
-        userForm = UserForm(request.POST, instance=request.user)
-        verifyEmail = Usuario.objects.filter(
-            user__email=request.POST.get('email')
-        ).exclude(user__id=request.user.id).first()
-        emailUnused = verifyEmail is None
+        userForm = UserForm(request.POST, instance=user_instance)
 
-        if usuarioForm.is_valid() and userForm.is_valid() and emailUnused:
+        if usuarioForm.is_valid() and userForm.is_valid():
             usuarioForm.save()
             userForm.save()
-            message = { 'type': 'success', 'text': 'Dados atualizados com sucesso' }
+            message = {'type': 'success', 'text': 'Dados atualizados com sucesso'}
         else:
-            if emailUnused:
-                message = { 'type': 'danger', 'text': 'Dados inválidos' }
-            else:
-                message = { 'type': 'warning', 'text': 'E-mail já usado' }
+            message = {'type': 'danger', 'text': 'Dados inválidos'}
     else:
         usuarioForm = UserUsuarioForm(instance=usuario)
-        userForm = UserForm(instance=request.user)
+        userForm = UserForm(instance=user_instance)
+
     context = {
         'usuarioForm': usuarioForm,
         'userForm': userForm,
         'message': message
     }
     
-    return render(
-        request, 
-        template_name='usuario/usuario-edit.html', 
-        context=context, 
-        status=200
-    )
+    return render(request, template_name='usuario/usuario-edit.html', context=context, status=200)
