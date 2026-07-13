@@ -11,6 +11,12 @@
     
     {% block styles %}{% endblock %}
     <title>Loja - {% block title %}{% endblock %}</title>
+
+    <style>
+        body {
+            background-color: #f0f4f8;
+        }
+    </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
     <header>
@@ -20,16 +26,24 @@
                     <a class="nav-link" href="/"><i class="fa fa-home"></i> Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/categoria"><i class="fa fa-book"></i> Categoria</a>
+                    <a class="nav-link" href="{% url 'list_categoria' %}">
+                        <i class="fa fa-book"></i> Categoria
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/fabricante"><i class="fa fa-book"></i> Fabricante</a>
+                    <a class="nav-link" href="{% url 'list_fabricante' %}">
+                        <i class="fa fa-book"></i> Fabricante
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/produto"><i class="fa fa-book"></i> Produto</a>
+                    <a class="nav-link" href="/produto/">
+                        <i class="fa fa-book"></i> Produto
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/usuario"><i class="fa fa-book"></i> Usuário</a>
+                    <a class="nav-link" href="/usuario/">
+                        <i class="fa fa-book"></i> Usuário
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fa fa-sign-in"></i> Entrar</a>
@@ -47,7 +61,7 @@
 
     <footer class="page-footer font-small blue mt-auto border-top bg-light">
         <div class="footer-copyright text-center py-3">
-            ©2020 Copyright: <a href="https://www.casadocodigo.com.br/">Casadocodigo.com.br</a>
+            ©2026 Copyright: <a href="https://www.casadocodigo.com.br/">Casadocodigo.com.br</a>
         </div>
     </footer>
 

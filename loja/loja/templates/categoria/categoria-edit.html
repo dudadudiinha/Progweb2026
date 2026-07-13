@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Editar Categoria{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Editar Categoria</h3>
+    </div>
+    <hr>
+    
+    <!-- Este formulário vai enviar os dados para a sua view de postback de categoria -->
+    <form action="/categoria/editar/{{ categoria.id }}/" method="POST">
+        {% csrf_token %}
+        
+        <!-- Campo oculto para garantir o ID da categoria -->
+        <input type="hidden" name="id" value="{{ categoria.id }}">
+
+        <div class="form-group mb-3">
+            <label class="font-weight-bold mb-1">Nome da Categoria</label>
+            <input type="text" name="Categoria" value="{{ categoria.Categoria }}" class="form-control" required>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-save"></i> Salvar Alterações
+            </button>
+            <a href="/categoria" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

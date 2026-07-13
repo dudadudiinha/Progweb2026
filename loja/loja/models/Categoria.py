@@ -1,4 +1,3 @@
-# loja/models/Categoria:
 from loja.models import *
 
 class Categoria(models.Model):

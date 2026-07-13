@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4 text-center">
+    <form method="POST" class="col-md-6 offset-md-3">
+        {% csrf_token %}
+        <h2>Confirmar Exclusão</h2>
+        <p>Tem certeza que deseja deletar a categoria <strong>{{ categoria.Nome }}</strong>?</p>
+        <button type="submit" class="btn btn-danger">Sim, Deletar</button>
+        <a href="{% url 'list_categoria' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

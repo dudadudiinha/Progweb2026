@@ -157,28 +157,28 @@ def create_produto_view(request, id=None):
             
             if msgPromocao is not None:
                 obj_produto.msgPromocao = msgPromocao
+                
             obj_produto.preco = 0
             if (preco is not None) and (preco != ""):
+                preco = preco.replace(',', '.')
                 obj_produto.preco = preco
+                
             obj_produto.categoria = Categoria.objects.filter(id=categoria_id).first()
             obj_produto.fabricante = Fabricante.objects.filter(id=fabricante_id).first()
             
             obj_produto.criado_em = timezone.now()
             obj_produto.alterado_em = obj_produto.criado_em
+            if request.FILES and 'image' in request.FILES:
+                obj_produto.image = request.FILES['image']
             
-            if request.FILES:
-                num_files = len(request.FILES.getlist('image'))
-                if num_files > 0:
-                    imagefile = request.FILES['image']
-                    fs = FileSystemStorage()
-                    filename = fs.save(imagefile.name, imagefile)
-                    if (filename is not None) and (filename != ""):
-                        obj_produto.image = filename    
             obj_produto.save()
+            print("Produto %s inserido com sucesso!" % produto)
             return redirect("/produto")
+            
         except Exception as e:
-            print("Erro inserindo produto: %s" % e)
+            print("ERRO REAL AO INSERIR PRODUTO: %s" % e)
             return redirect("/produto")
+            
     Fabricantes = Fabricante.objects.all()
     Categorias = Categoria.objects.all()
     context = {

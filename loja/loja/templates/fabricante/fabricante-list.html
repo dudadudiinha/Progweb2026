@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Fabricantes{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Lista de Fabricantes</h3>
+        <a href="{% url 'create_fabricante' %}" class="btn btn-primary">Novo Fabricante</a>
+    </div>
+    <div class="alert alert-info">Fabricantes encontrados [{{ fabricantes|length }}]</div>
+    
+    <div class="row font-weight-bold mb-2">
+        <div class="col-md-8">Nome do Fabricante</div>
+        <div class="col-md-4">Ações</div>
+    </div>
+    <hr>
+    {% for fab in fabricantes %}
+        <div class="row mb-2 align-items-center">
+            <div class="col-md-8"><span>{{ fab.Fabricante }}</span></div>
+            <div class="col-md-4">
+                <a href="{% url 'edit_fabricante' fab.id %}" class="btn btn-warning btn-sm">
+                    <i class="fa fa-edit"></i> Editar
+                </a>
+                <a href="{% url 'delete_fabricante' fab.id %}" class="btn btn-danger btn-sm">
+                    <i class="fa fa-trash"></i> Excluir
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-muted">Nenhum fabricante cadastrado.</p>
+    {% endfor %}
+</div>
+{% endblock %}

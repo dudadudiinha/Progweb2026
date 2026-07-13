@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Editar Fabricante{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3>Editar Fabricante</h3>
+    <hr>
+    
+    <form action="/fabricante/editar/{{ fabricante.id }}/" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{ fabricante.id }}">
+
+        <div class="form-group mb-3">
+            <label class="font-weight-bold">Nome do Fabricante</label>
+            <input type="text" name="Fabricante" value="{{ fabricante.Fabricante }}" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-save"></i> Salvar Alterações
+        </button>
+        <a href="/fabricante" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

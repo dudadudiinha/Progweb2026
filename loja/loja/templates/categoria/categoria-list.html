@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Categorias{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Lista de Categorias</h3>
+        <a href="{% url 'create_categoria' %}" class="btn btn-primary">Nova Categoria</a>
+    </div>
+    <div class="alert alert-info">Categorias encontrados [{{ categorias|length }}]</div>
+    
+    <div class="row font-weight-bold mb-2">
+        <div class="col-md-8">Nome da Categoria</div>
+        <div class="col-md-4">Ações</div>
+    </div>
+    <hr>
+    {% for cat in categorias %}
+        <div class="row mb-2 align-items-center">
+            <div class="col-md-8"><span>{{ cat.Categoria }}</span></div>
+            <div class="col-md-4">
+                <a href="{% url 'edit_categoria' cat.id %}" class="btn btn-warning btn-sm">
+                    <i class="fa fa-edit"></i> Editar
+                </a>
+                <a href="{% url 'delete_categoria' cat.id %}" class="btn btn-danger btn-sm">
+                    <i class="fa fa-trash"></i> Excluir
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-muted">Nenhuma categoria cadastrada.</p>
+    {% endfor %}
+</div>
+{% endblock %}

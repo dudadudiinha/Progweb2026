@@ -3,45 +3,47 @@
 
 {% block title %}Produtos{% endblock %}
 
-{% block styles %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
-{% endblock %}
-
 {% block content %}
-<div id="content">
-    <div class="container">
-        <div class="alert alert-info d-flex justify-content-between align-items-center">
-            <div>
-                Produtos encontrados [<strong>{{ produtos | length }}</strong>]
-            </div>
-            <a href="{% url 'create_produto' %}" class="btn btn-primary">
-                <i class="fa fa-plus"></i> Novo Produto
-            </a>
-        </div>
-
-        {% for prod in produtos %}
-            <div class="row align-items-center mb-3 border-bottom pb-2">
-                <h5 class="col-md-3 mb-0">{{ prod.Produto }}</h5>
-                
-                <div class="col-md-9">
-                    <a href="{% url 'details_produto' prod.id %}" class="btn btn-primary mb-2 mr-2">
-                        <i class="fa fa-search"></i> Ver
-                    </a>
-                    <a href="{% url 'edit_produto' prod.id %}" class="btn bg-secondary mb-2 mr-2 text-white">
-                        <i class="fa fa-edit"></i> Editar
-                    </a>
-                    <a href="{% url 'delete_produto' prod.id %}" class="btn btn-warning mb-2">
-                        <i class="fa fa-trash"></i> Apagar
-                    </a>
-                </div>
-            </div>
-        {% empty %}
-            <div class="text-muted">Nenhum produto cadastrado.</div>
-        {% endfor %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Lista de Produtos</h3>
+        <a href="{% url 'create_produto' %}" class="btn btn-primary">Novo Produto</a>
     </div>
-</div>
-{% endblock %}
 
-{% block scripts %}
-<script src="{% static 'js/home.js' %}"></script>
+    <div class="alert alert-info">
+        Produtos encontrados [{{ produtos|length }}]
+    </div>
+    
+    <div class="row font-weight-bold mb-2">
+        <div class="col-md-8">Nome do Produto</div>
+        <div class="col-md-4">Ações</div>
+    </div>
+    <hr class="mt-0">
+
+    {% for prod in produtos %}
+        <div class="row mb-2 align-items-center">
+            <div class="col-md-8">
+                <span>{{ prod.Produto }}</span>
+            </div>
+            <div class="col-md-4">
+                <!-- 🛠️ CORRIGIDO: Rota 'details_produto' substituindo '/produto/ver/' -->
+                <a href="{% url 'details_produto' prod.id %}" class="btn btn-primary btn-sm">
+                    <i class="fa fa-search"></i> Ver
+                </a>
+                
+                <!-- 🛠️ CORRIGIDO: Rota 'edit_produto' substituindo '/produto/editar/' -->
+                <a href="{% url 'edit_produto' prod.id %}" class="btn btn-warning btn-sm">
+                    <i class="fa fa-edit"></i> Editar
+                </a>
+                
+                <!-- 🛠️ CORRIGIDO: Rota 'delete_produto' substituindo '/produto/apagar/' -->
+                <a href="{% url 'delete_produto' prod.id %}" class="btn btn-danger btn-sm">
+                    <i class="fa fa-trash"></i> Apagar
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-muted">Nenhum produto cadastrado.</p>
+    {% endfor %}
+</div>
 {% endblock %}
